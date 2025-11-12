@@ -1,0 +1,96 @@
+  .course-card {
+    font-size: 0.9rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .course-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .course-card .price {
+    font-size: 1.8rem;
+  }
+
+  .course-card .btn-dark {
+    background-color: #0b0b14;
+    border: none;
+  }
+
+  .course-card .btn-dark:hover {
+    background-color: #212529;
+  }
+
+  /* Tabs section */
+  .tabs-container {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .nav-tabs .nav-link {
+    border: none;
+    color: #333;
+    font-weight: 500;
+    border-radius: 0;
+  }
+
+  .nav-tabs .nav-link.active {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    border-bottom: 3px solid #0b0b14;
+  }
+
+  .tab-content {
+    background-color: #fff;
+    padding: 20px;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .tab-content li {
+    margin-bottom: 10px;
+  }
+
+  .tab-content .fa-check {
+    color: #28a745;
+  }
+     .nav-tabs .nav-link {
+        color: #555;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .nav-tabs .nav-link.active {
+        color: #000;
+        border-color: #dee2e6 #dee2e6 #fff;
+      }
+      .lesson-card {
+        border: 1px solid #eee;
+        border-radius: 10px;
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        transition: 0.2s;
+      }
+      .lesson-card:hover {
+        background-color: #f9f9f9;
+      }
+      .lesson-number {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f4f4f4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin-right: 10px;
+        font-size: 0.85rem;
+      }
+      .lesson-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .lesson-time {
+        font-size: 0.8rem;
+      }
