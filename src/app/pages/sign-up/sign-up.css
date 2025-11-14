@@ -113,6 +113,10 @@
     position: relative;
 }
 
+.password-input-container .form-control {
+    padding-right: 45px;
+}
+
 .password-toggle {
     position: absolute;
     right: 12px;
@@ -122,13 +126,32 @@
     border: none;
     color: #666;
     cursor: pointer;
-    padding: 4px;
+    padding: 8px;
     font-size: 16px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 4px;
 }
 
 .password-toggle:hover {
     color: #4285f4;
+    background-color: #f5f5f5;
+}
+
+.password-toggle:focus {
+    outline: none;
+    color: #4285f4;
+}
+
+.password-toggle i {
+    transition: transform 0.2s ease;
+}
+
+.password-toggle:hover i {
+    transform: scale(1.1);
 }
 
 /* Sign In Button */

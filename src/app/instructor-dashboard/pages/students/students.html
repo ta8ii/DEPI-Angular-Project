@@ -1,0 +1,82 @@
+<div class="students">
+  <div class="page-header">
+    <h1 class="page-title">Students</h1>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search by name, email, or course..."
+        class="search-input"
+      />
+    </div>
+    <div class="filter-box">
+      <select [(ngModel)]="selectedCourse" (ngModelChange)="onCourseFilterChange()" class="filter-select">
+        <option value="all">All Courses</option>
+        <option *ngFor="let courseId of getUniqueCourses()" [value]="courseId">
+          {{ getCourseName(courseId) }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    <span>Loading students...</span>
+  </div>
+
+  <div *ngIf="!loading && filteredStudents.length === 0" class="empty-state">
+    <i class="fas fa-users"></i>
+    <h3>No students found</h3>
+    <p>Try adjusting your search or filters.</p>
+  </div>
+
+  <div *ngIf="!loading && filteredStudents.length > 0" class="students-table-container">
+    <table class="students-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Enrolled Course</th>
+          <th>Progress</th>
+          <th>Enrolled Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of filteredStudents">
+          <td>
+            <div class="student-info">
+              <div class="student-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <span class="student-name">{{ student.name }}</span>
+            </div>
+          </td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.enrolledCourseName }}</td>
+          <td>
+            <div class="progress-container">
+              <div class="progress-bar-wrapper">
+                <div class="progress-bar" [style.width.%]="student.progress"></div>
+              </div>
+              <span class="progress-text">{{ student.progress }}%</span>
+            </div>
+          </td>
+          <td>{{ student.enrolledDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && filteredStudents.length > 0" class="students-summary">
+    <div class="summary-item">
+      <i class="fas fa-users"></i>
+      <span>Total Students: {{ filteredStudents.length }}</span>
+    </div>
+  </div>
+</div>
+

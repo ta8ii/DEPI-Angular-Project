@@ -1,0 +1,108 @@
+<div class="dashboard-home">
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <h1 class="welcome-title">Welcome back, Instructor!</h1>
+    <p class="welcome-subtitle">Here's what's happening with your courses today.</p>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="summary-card">
+      <div class="summary-icon blue">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="summary-content">
+        <div class="summary-number">{{ statistics.totalStudents | number }}</div>
+        <div class="summary-label">Total Students</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon green">
+        <i class="fas fa-book"></i>
+      </div>
+      <div class="summary-content">
+        <div class="summary-number">{{ statistics.totalCourses }}</div>
+        <div class="summary-label">Total Courses</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon purple">
+        <i class="fas fa-dollar-sign"></i>
+      </div>
+      <div class="summary-content">
+        <div class="summary-number">${{ statistics.revenue | number:'1.2-2' }}</div>
+        <div class="summary-label">Total Revenue</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon orange">
+        <i class="fas fa-user-plus"></i>
+      </div>
+      <div class="summary-content">
+        <div class="summary-number">{{ statistics.newEnrollments }}</div>
+        <div class="summary-label">New Enrollments</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats Grid -->
+  <div class="row main-grid">
+    <div class="col-md-8">
+      <div class="section-card">
+        <h3 class="section-title">Recent Activity</h3>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon blue">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">New student enrolled</div>
+              <div class="activity-meta">Alice Johnson enrolled in Complete Web Development Bootcamp</div>
+              <div class="activity-time">2 hours ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon green">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">Course completed</div>
+              <div class="activity-meta">Emma Davis completed UI/UX Design Masterclass</div>
+              <div class="activity-time">5 hours ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon purple">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">Payment received</div>
+              <div class="activity-meta">$99.99 payment for Complete Web Development Bootcamp</div>
+              <div class="activity-time">1 day ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="section-card">
+        <h3 class="section-title">Quick Actions</h3>
+        <div class="quick-actions">
+          <a routerLink="/dashboard/add-course" class="quick-action-item">
+            <i class="fas fa-plus-circle"></i>
+            <span>Create New Course</span>
+          </a>
+          <a routerLink="/dashboard/my-courses" class="quick-action-item">
+            <i class="fas fa-book"></i>
+            <span>Manage Courses</span>
+          </a>
+          <a routerLink="/dashboard/students" class="quick-action-item">
+            <i class="fas fa-users"></i>
+            <span>View Students</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

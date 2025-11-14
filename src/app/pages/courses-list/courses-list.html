@@ -44,7 +44,7 @@
         
         <!-- Course Count -->
         <div class="course-count">
-          <span class="count-text">Showing 6 of 6 courses</span>
+          <span class="count-text">Showing {{ courses.length }} of {{ courses.length }} courses</span>
         </div>
       </div>
     </div>
@@ -54,200 +54,34 @@
   <section class="courses-section">
     <div class="container">
       <div class="row g-4">
-        <!-- Course Card 1 -->
-        <div class="col-lg-4 col-md-6">
+        <div *ngFor="let course of courses" class="col-lg-4 col-md-6">
           <div class="course-card">
             <div class="course-image">
               <div class="image-placeholder"></div>
             </div>
             <div class="course-content">
               <div class="course-tags">
-                <span class="tag">Programming</span>
-                <span class="tag">beginner</span>
+                <span class="tag">{{ course.category }}</span>
+                <span class="tag">{{ course.level }}</span>
               </div>
-              <h3 class="course-title">Complete Web Development Bootcamp</h3>
-              <p class="course-description">Learn HTML, CSS, JavaScript, React, Node.js and build amazing web applications from scratch.</p>
-              <p class="instructor">by John Smith</p>
+              <h3 class="course-title">{{ course.title }}</h3>
+              <p class="course-description">{{ course.description }}</p>
+              <p class="instructor">by {{ course.instructor }}</p>
               <div class="course-stats">
                 <div class="stat">
                   <i class="fas fa-star"></i>
-                  <span>4.9</span>
+                  <span>{{ course.rating }}</span>
                 </div>
                 <div class="stat">
                   <i class="fas fa-users"></i>
-                  <span>2,847</span>
+                  <span>{{ course.students | number }}</span>
                 </div>
                 <div class="stat">
                   <i class="fas fa-clock"></i>
-                  <span>40 hours</span>
+                  <span>{{ course.hours }} hours</span>
                 </div>
               </div>
-              <button class="btn view-course-btn btn btn-primary signup-btn">View Course</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course Card 2 -->
-        <div class="col-lg-4 col-md-6">
-          <div class="course-card">
-            <div class="course-image">
-              <div class="image-placeholder"></div>
-            </div>
-            <div class="course-content">
-              <div class="course-tags">
-                <span class="tag">Data Science</span>
-                <span class="tag">intermediate</span>
-              </div>
-              <h3 class="course-title">Data Science & Machine Learning</h3>
-              <p class="course-description">Master Python, statistics, machine learning algorithms and data visualization techniques.</p>
-              <p class="instructor">by Sarah Johnson</p>
-              <div class="course-stats">
-                <div class="stat">
-                  <i class="fas fa-star"></i>
-                  <span>4.7</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-users"></i>
-                  <span>1,523</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-clock"></i>
-                  <span>35 hours</span>
-                </div>
-              </div>
-              <button class="btn view-course-btn btn btn-primary signup-btn">View Course</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course Card 3 -->
-        <div class="col-lg-4 col-md-6">
-          <div class="course-card">
-            <div class="course-image">
-              <div class="image-placeholder"></div>
-            </div>
-            <div class="course-content">
-              <div class="course-tags">
-                <span class="tag">Design</span>
-                <span class="tag">beginner</span>
-              </div>
-              <h3 class="course-title">UI/UX Design Masterclass</h3>
-              <p class="course-description">Create beautiful and functional user interfaces with modern design principles and tools.</p>
-              <p class="instructor">by Mike Chen</p>
-              <div class="course-stats">
-                <div class="stat">
-                  <i class="fas fa-star"></i>
-                  <span>4.8</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-users"></i>
-                  <span>3,156</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-clock"></i>
-                  <span>30 hours</span>
-                </div>
-              </div>
-              <button class="btn view-course-btn btn btn-primary signup-btn">View Course</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course Card 4 -->
-        <div class="col-lg-4 col-md-6">
-          <div class="course-card">
-            <div class="course-image">
-              <div class="image-placeholder"></div>
-            </div>
-            <div class="course-content">
-              <div class="course-tags">
-                <span class="tag">Mobile</span>
-                <span class="tag">intermediate</span>
-              </div>
-              <h3 class="course-title">React Native Development</h3>
-              <p class="course-description">Build cross-platform mobile apps with React Native and modern development practices.</p>
-              <p class="instructor">by Alex Rodriguez</p>
-              <div class="course-stats">
-                <div class="stat">
-                  <i class="fas fa-star"></i>
-                  <span>4.6</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-users"></i>
-                  <span>1,892</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-clock"></i>
-                  <span>25 hours</span>
-                </div>
-              </div>
-              <button class="btn view-course-btn btn btn-primary signup-btn">View Course</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course Card 5 -->
-        <div class="col-lg-4 col-md-6">
-          <div class="course-card">
-            <div class="course-image">
-              <div class="image-placeholder"></div>
-            </div>
-            <div class="course-content">
-              <div class="course-tags">
-                <span class="tag">Marketing</span>
-                <span class="tag">beginner</span>
-              </div>
-              <h3 class="course-title">Digital Marketing Strategies</h3>
-              <p class="course-description">Learn SEO, social media marketing, content strategy and digital advertising techniques.</p>
-              <p class="instructor">by Emma Wilson</p>
-              <div class="course-stats">
-                <div class="stat">
-                  <i class="fas fa-star"></i>
-                  <span>4.9</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-users"></i>
-                  <span>2,341</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-clock"></i>
-                  <span>20 hours</span>
-                </div>
-              </div>
-              <button class="btn view-course-btn btn btn-primary signup-btn">View Course</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course Card 6 -->
-        <div class="col-lg-4 col-md-6">
-          <div class="course-card">
-            <div class="course-image">
-              <div class="image-placeholder"></div>
-            </div>
-            <div class="course-content">
-              <div class="course-tags">
-                <span class="tag">Photography</span>
-                <span class="tag">beginner</span>
-              </div>
-              <h3 class="course-title">Professional Photography</h3>
-              <p class="course-description">Master camera techniques, composition, lighting and post-processing for stunning photos.</p>
-              <p class="instructor">by David Kim</p>
-              <div class="course-stats">
-                <div class="stat">
-                  <i class="fas fa-star"></i>
-                  <span>4.7</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-users"></i>
-                  <span>1,678</span>
-                </div>
-                <div class="stat">
-                  <i class="fas fa-clock"></i>
-                  <span>15 hours</span>
-                </div>
-              </div>
-              <button class="btn view-course-btn btn btn-primary signup-btn">View Course</button>
+              <button class="btn view-course-btn btn btn-primary signup-btn" [routerLink]="['/courses', course.id]">View Course</button>
             </div>
           </div>
         </div>

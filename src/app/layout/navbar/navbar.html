@@ -1,6 +1,6 @@
 <div class="body">
   <nav class="navbar navbar-expand-lg navbar-light bg-white py-0 shadow-sm">
-    <div class="container-fluid px-5 mx-5 d-flex align-items-center justify-content-between">
+    <div class="container-fluid px-5 mx-5 d-flex align-items-center justify-content-center" style="gap: 3rem;">
       <!-- ✅ Logo & Brand -->
       <div class="d-flex align-items-center">
         <div class="logo me-2">
@@ -23,8 +23,8 @@
         </div>
       </div>
 
-      <!-- ✅ Desktop Nav Links (أقصى اليمين) -->
-      <div class="nav-section d-none d-lg-flex align-items-center gap-4 ms-auto">
+      <!-- ✅ Desktop Nav Links -->
+      <div class="nav-section d-none d-lg-flex align-items-center gap-4">
         <a routerLink="/courses" class="nav-link">Courses</a>
 
         <ng-container *ngIf="!isLoggedIn; else loggedInMenu">
@@ -40,14 +40,31 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              {{ currentUser?.firstName || 'Profile' }}
+              {{ currentUser?.name || currentUser?.firstName || 'Profile' }}
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-              <li><a class="dropdown-item" routerLink="/dashboard">Dashboard</a></li>
-              <li><a class="dropdown-item" routerLink="/courses">My Courses</a></li>
-              <!-- <li><a class="dropdown-item" routerLink="/settings">Settings</a></li> -->
+              <li *ngIf="currentUser?.role === 'student'"><a class="dropdown-item" routerLink="/student/home">
+                <i class="fas fa-home me-2"></i>Dashboard
+              </a></li>
+              <li *ngIf="currentUser?.role === 'instructor'"><a class="dropdown-item" routerLink="/instructor/home">
+                <i class="fas fa-home me-2"></i>Dashboard
+              </a></li>
+              <li *ngIf="currentUser?.role === 'student'"><a class="dropdown-item" routerLink="/student/my-courses">
+                <i class="fas fa-book me-2"></i>My Courses
+              </a></li>
+              <li *ngIf="currentUser?.role === 'instructor'"><a class="dropdown-item" routerLink="/instructor/my-courses">
+                <i class="fas fa-book me-2"></i>My Courses
+              </a></li>
+              <li *ngIf="currentUser?.role === 'student'"><a class="dropdown-item" routerLink="/student/profile">
+                <i class="fas fa-user me-2"></i>Profile
+              </a></li>
+              <li *ngIf="currentUser?.role === 'instructor'"><a class="dropdown-item" routerLink="/instructor/profile">
+                <i class="fas fa-user me-2"></i>Profile
+              </a></li>
               <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item text-danger" (click)="logout()">Sign out</a></li>
+              <li><a class="dropdown-item text-danger" (click)="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>Sign out
+              </a></li>
             </ul>
           </div>
         </ng-template>
@@ -76,12 +93,15 @@
             <button class="btn btn-primary w-100 mt-2" routerLink="/sign-up">Sign Up</button>
           </ng-container>
 
-          <ng-template #mobileLoggedMenu>
-            <a class="nav-link" routerLink="/dashboard">Dashboard</a>
-            <a class="nav-link" routerLink="/my-courses">My Courses</a>
-            <a class="nav-link" routerLink="/settings">Settings</a>
-            <button class="btn btn-danger w-100 mt-2" (click)="logout()">Sign out</button>
-          </ng-template>
+                 <ng-template #mobileLoggedMenu>
+                   <a *ngIf="currentUser?.role === 'student'" class="nav-link" routerLink="/student/home">Dashboard</a>
+                   <a *ngIf="currentUser?.role === 'instructor'" class="nav-link" routerLink="/instructor/home">Dashboard</a>
+                   <a *ngIf="currentUser?.role === 'student'" class="nav-link" routerLink="/student/my-courses">My Courses</a>
+                   <a *ngIf="currentUser?.role === 'instructor'" class="nav-link" routerLink="/instructor/my-courses">My Courses</a>
+                   <a *ngIf="currentUser?.role === 'student'" class="nav-link" routerLink="/student/profile">Profile</a>
+                   <a *ngIf="currentUser?.role === 'instructor'" class="nav-link" routerLink="/instructor/profile">Profile</a>
+                   <button class="btn btn-danger w-100 mt-2" (click)="logout()">Sign out</button>
+                 </ng-template>
         </div>
 
         <!-- ✅ Mobile Search -->

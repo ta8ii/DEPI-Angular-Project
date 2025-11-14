@@ -1,0 +1,41 @@
+<div class="student-home-page">
+  <div class="container py-5">
+    <div class="page-header">
+      <h1 class="page-title">My Learning Dashboard</h1>
+      <p class="page-subtitle">Continue your learning journey</p>
+    </div>
+
+    <div *ngIf="loading" class="loading-state">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span>Loading courses...</span>
+    </div>
+
+    <div *ngIf="!loading && enrolledCourses.length === 0" class="empty-state">
+      <i class="fas fa-book"></i>
+      <h3>No enrolled courses yet</h3>
+      <p>Start learning by enrolling in a course</p>
+      <a routerLink="/courses" class="btn btn-primary">Browse Courses</a>
+    </div>
+
+    <div *ngIf="!loading && enrolledCourses.length > 0" class="courses-grid">
+      <div *ngFor="let course of enrolledCourses" class="course-card">
+        <div class="course-thumbnail">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="course-content">
+          <h3 class="course-title">{{ course.title }}</h3>
+          <div class="course-progress">
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar" [style.width.%]="course.progress"></div>
+            </div>
+            <span class="progress-text">{{ course.progress }}%</span>
+          </div>
+          <a [routerLink]="['/student/course', course.id]" class="btn btn-primary btn-sm">
+            <i class="fas fa-play me-2"></i>Continue Learning
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

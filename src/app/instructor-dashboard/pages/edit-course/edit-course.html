@@ -1,0 +1,166 @@
+<div class="edit-course">
+  <div class="page-header">
+    <h1 class="page-title">Edit Course</h1>
+    <a routerLink="/dashboard/my-courses" class="btn-secondary">
+      <i class="fas fa-arrow-left"></i>
+      Back to Courses
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    <span>Loading course...</span>
+  </div>
+
+  <div *ngIf="!loading" class="form-container">
+    <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="course-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="title">Course Title *</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            class="form-control"
+            [class.error]="courseForm.get('title')?.invalid && courseForm.get('title')?.touched"
+            placeholder="Enter course title"
+          />
+          <div *ngIf="courseForm.get('title')?.invalid && courseForm.get('title')?.touched" class="error-message">
+            {{ getFieldError('title') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+            rows="5"
+            [class.error]="courseForm.get('description')?.invalid && courseForm.get('description')?.touched"
+            placeholder="Enter course description"
+          ></textarea>
+          <div *ngIf="courseForm.get('description')?.invalid && courseForm.get('description')?.touched" class="error-message">
+            {{ getFieldError('description') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select
+            id="category"
+            formControlName="category"
+            class="form-control"
+            [class.error]="courseForm.get('category')?.invalid && courseForm.get('category')?.touched"
+          >
+            <option value="">Select category</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Mobile Development">Mobile Development</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Design">Design</option>
+            <option value="Business">Business</option>
+            <option value="Marketing">Marketing</option>
+          </select>
+          <div *ngIf="courseForm.get('category')?.invalid && courseForm.get('category')?.touched" class="error-message">
+            {{ getFieldError('category') }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="level">Level *</label>
+          <select
+            id="level"
+            formControlName="level"
+            class="form-control"
+            [class.error]="courseForm.get('level')?.invalid && courseForm.get('level')?.touched"
+          >
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+          <div *ngIf="courseForm.get('level')?.invalid && courseForm.get('level')?.touched" class="error-message">
+            {{ getFieldError('level') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="price">Price ($) *</label>
+          <input
+            type="number"
+            id="price"
+            formControlName="price"
+            class="form-control"
+            [class.error]="courseForm.get('price')?.invalid && courseForm.get('price')?.touched"
+            placeholder="0.00"
+            min="0"
+            step="0.01"
+          />
+          <div *ngIf="courseForm.get('price')?.invalid && courseForm.get('price')?.touched" class="error-message">
+            {{ getFieldError('price') }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="status">Status *</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="form-control"
+            [class.error]="courseForm.get('status')?.invalid && courseForm.get('status')?.touched"
+          >
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+          <div *ngIf="courseForm.get('status')?.invalid && courseForm.get('status')?.touched" class="error-message">
+            {{ getFieldError('status') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="imageUrl">Image URL</label>
+          <input
+            type="url"
+            id="imageUrl"
+            formControlName="imageUrl"
+            class="form-control"
+            placeholder="https://example.com/image.jpg"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="videoUrl">Video URL *</label>
+          <input
+            type="url"
+            id="videoUrl"
+            formControlName="videoUrl"
+            class="form-control"
+            [class.error]="courseForm.get('videoUrl')?.invalid && courseForm.get('videoUrl')?.touched"
+            placeholder="https://example.com/video.mp4"
+          />
+          <div *ngIf="courseForm.get('videoUrl')?.invalid && courseForm.get('videoUrl')?.touched" class="error-message">
+            {{ getFieldError('videoUrl') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" routerLink="/dashboard/my-courses" class="btn-secondary">
+          Cancel
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="submitting">
+          <i class="fas" [class.fa-spinner]="submitting" [class.fa-spin]="submitting" [class.fa-check]="!submitting"></i>
+          {{ submitting ? 'Updating...' : 'Update Course' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

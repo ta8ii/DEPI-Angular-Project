@@ -1,0 +1,43 @@
+<nav class="top-navbar">
+  <div class="navbar-content">
+    <div class="navbar-left">
+      <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h2 class="page-title">Instructor Dashboard</h2>
+    </div>
+    <div class="navbar-right">
+      <div class="navbar-actions">
+        <button class="icon-btn" (click)="toggleNotifications()">
+          <i class="fas fa-bell"></i>
+          <span class="badge">3</span>
+        </button>
+        <div class="profile-menu-wrapper">
+          <button class="profile-btn" (click)="toggleProfileMenu()">
+            <div class="profile-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <span class="profile-name">John Doe</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" *ngIf="showProfileMenu">
+            <a routerLink="/dashboard/profile" class="dropdown-item">
+              <i class="fas fa-user"></i>
+              <span>Profile</span>
+            </a>
+            <a routerLink="/dashboard/profile" class="dropdown-item">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+

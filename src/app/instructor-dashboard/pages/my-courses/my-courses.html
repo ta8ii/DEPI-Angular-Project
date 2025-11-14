@@ -1,0 +1,73 @@
+<div class="my-courses">
+  <div class="page-header">
+    <h1 class="page-title">My Courses</h1>
+    <a routerLink="/dashboard/add-course" class="btn-primary">
+      <i class="fas fa-plus"></i>
+      Add New Course
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    <span>Loading courses...</span>
+  </div>
+
+  <div *ngIf="!loading && courses.length === 0" class="empty-state">
+    <i class="fas fa-book"></i>
+    <h3>No courses yet</h3>
+    <p>Start creating your first course to get started!</p>
+    <a routerLink="/dashboard/add-course" class="btn-primary">
+      <i class="fas fa-plus"></i>
+      Create Course
+    </a>
+  </div>
+
+  <div *ngIf="!loading && courses.length > 0" class="courses-grid">
+    <div *ngFor="let course of courses; let i = index" class="course-card">
+      <div class="course-image" [class]="getGradientClass(i)">
+        <i class="fas fa-book"></i>
+      </div>
+      <div class="course-card-body">
+        <div class="course-status-badge" [class.published]="course.status === 'published'" [class.draft]="course.status === 'draft'">
+          <i class="fas" [class.fa-check-circle]="course.status === 'published'" [class.fa-clock]="course.status === 'draft'"></i>
+          <span>{{ course.status | titlecase }}</span>
+        </div>
+        <h3 class="course-title">{{ course.title }}</h3>
+        <p class="course-description">{{ course.description }}</p>
+        <div class="course-meta">
+          <div class="meta-item">
+            <i class="fas fa-tag"></i>
+            <span>{{ course.category }}</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-signal"></i>
+            <span>{{ course.level | titlecase }}</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-users"></i>
+            <span>{{ course.enrolledStudents }} students</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-dollar-sign"></i>
+            <span>${{ course.price }}</span>
+          </div>
+        </div>
+        <div class="course-actions">
+          <a [routerLink]="['/dashboard/edit-course', course.id]" class="btn-action edit">
+            <i class="fas fa-edit"></i>
+            Edit
+          </a>
+          <button class="btn-action delete" (click)="deleteCourse(course.id)">
+            <i class="fas fa-trash"></i>
+            Delete
+          </button>
+          <a routerLink="/dashboard/students" [queryParams]="{courseId: course.id}" class="btn-action view">
+            <i class="fas fa-users"></i>
+            Students
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

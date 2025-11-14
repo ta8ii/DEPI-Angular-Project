@@ -176,12 +176,13 @@
 
 /* Extra Large Screens (1200px and up) */
 @media (min-width: 1200px) {
-    .navbar .container-fluid {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding-left: 30px;
-        padding-right: 30px;
-    }
+.navbar .container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: center !important;
+}
     
     .search-container {
         max-width: 500px;
@@ -190,12 +191,13 @@
 
 /* Large Screens (992px and up) */
 @media (min-width: 992px) {
-    .navbar .container-fluid {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+.navbar .container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: center !important;
+}
 }
 
 /* Mobile Screens (below 992px) */
@@ -327,7 +329,7 @@
 }
 
 .nav-section {
-  margin-left: auto !important; /* pushes to far right */
+  margin-left: 0 !important;
   display: flex;
   align-items: center;
   gap: 25px;

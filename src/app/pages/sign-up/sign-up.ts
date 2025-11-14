@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth';
   styleUrl: './sign-up.css',
 })
 export class SignUp {
+  showPassword = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   userInfo = {
@@ -26,17 +28,33 @@ export class SignUp {
     this.selectedRole = role;
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   submit(form: any) {
     if (!form.valid) {
       alert('Please fill all fields correctly.');
       return;
     }
 
-    const success = this.authService.register(form.value);
+    if (!this.selectedRole) {
+      alert('Please select a role (Student or Instructor).');
+      return;
+    }
+
+    const userData = {
+      ...form.value,
+      role: this.selectedRole,
+      id: Date.now().toString()
+    };
+
+    const success = this.authService.register(userData);
 
     if (success) {
       alert('Registration successful ✅');
       form.reset();
+      this.selectedRole = '';
       this.router.navigate(['/login']);
     } else {
       alert('This email is already registered ❌');

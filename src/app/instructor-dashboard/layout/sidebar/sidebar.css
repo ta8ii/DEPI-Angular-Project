@@ -1,0 +1,260 @@
+.sidebar {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  width: 280px;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+  padding: 2rem 1rem;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 3px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.sidebar:not(.collapsed) .logo-section {
+  justify-content: flex-start;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #4285f4;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .logo-icon {
+  margin-right: 0;
+}
+
+.logo-letter {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #2a2a2a;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.sidebar:not(.collapsed) .user-profile {
+  justify-content: flex-start;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #4285f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: #ffffff;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .user-avatar {
+  margin-right: 0;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  font-size: 14px;
+  color: #999;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+.sidebar:not(.collapsed) .nav-item {
+  justify-content: flex-start;
+}
+
+.nav-item i {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .nav-item i {
+  margin-right: 0;
+}
+
+.nav-item:hover {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.sidebar.collapsed .nav-item:hover {
+  transform: none;
+}
+
+.nav-item.active {
+  background-color: #4285f4;
+  color: #ffffff;
+}
+
+.nav-item.active:hover {
+  background-color: #357abd;
+}
+
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.browse-link,
+.account-settings {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  justify-content: center;
+}
+
+.sidebar:not(.collapsed) .browse-link,
+.sidebar:not(.collapsed) .account-settings {
+  justify-content: flex-start;
+}
+
+.browse-link i,
+.account-settings i {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .browse-link i,
+.sidebar.collapsed .account-settings i {
+  margin-right: 0;
+}
+
+.browse-link:hover,
+.account-settings:hover {
+  background-color: #2a2a2a;
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 1rem;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  background-color: #4285f4;
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.toggle-btn:hover {
+  background-color: #357abd;
+  transform: scale(1.1);
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    width: 280px;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .toggle-btn {
+    display: none;
+  }
+}
+

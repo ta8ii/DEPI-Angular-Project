@@ -12,12 +12,18 @@ import Swal from 'sweetalert2';
   styleUrl: './log-in.css',
 })
 export class LogIn {
+  showPassword = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   userInfo = {
     Email: '',
     password: '',
   };
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   submit(form: NgForm) {
     if (form.invalid) {
@@ -26,20 +32,39 @@ export class LogIn {
       return;
     }
 
-    const { email, password } = form.value;
-    const success = this.authService.login(email, password);
-    const currentUser = this.authService.getUser();
+    // Get email from form - check both Email and email fields
+    const email = form.value.Email || form.value.email || this.userInfo.Email;
+    const password = form.value.password || this.userInfo.password;
+    
+    console.log('Login attempt:', { email, password, formValue: form.value });
+    
+    if (!email || !password) {
+      alert('❌ Please enter both email and password.');
+      return;
+    }
 
-    if (success) {
+    const authUser = this.authService.login(email, password);
+
+    if (authUser) {
+      console.log('Login successful:', authUser);
       Swal.fire({
-        title: `Welcome back ${currentUser.firstName + ' ' + currentUser.lastName}`,
+        title: `Welcome back ${authUser.name}`,
         icon: 'success',
         draggable: true,
       });
-      // alert(`Welcome back, ${currentUser.firstName + ' ' + currentUser.lastName} ! 👋`);
       form.reset();
-      this.router.navigate(['/']);
+      
+      // Role-based redirect
+      // Navbar will auto-update via Router events listener
+      if (authUser.role === 'student') {
+        this.router.navigate(['/student/home']);
+      } else if (authUser.role === 'instructor') {
+        this.router.navigate(['/instructor/home']);
+      } else {
+        this.router.navigate(['/home']);
+      }
     } else {
+      console.log('Login failed - user not found');
       alert('❌ Email or password is incorrect.');
     }
   }
