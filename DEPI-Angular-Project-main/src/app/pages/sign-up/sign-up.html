@@ -1,0 +1,203 @@
+<div class="body">
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Header -->
+      <div class="login-header">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <span class="logo-letter">E</span>
+          </div>
+        </div>
+        <h1 class="welcome-title">Create Account</h1>
+        <p class="welcome-subtitle">Join our learning community today</p>
+      </div>
+
+      <!-- Sign Up Form -->
+      <form class="login-form" (ngSubmit)="submit(signUpForm)" #signUpForm="ngForm">
+        <!-- First Name -->
+        <div class="form-group">
+          <label for="fname" class="form-label">First Name</label>
+          <input
+            type="text"
+            id="fname"
+            class="form-control"
+            placeholder="Enter your first name"
+            required
+            minlength="2"
+            [(ngModel)]="userInfo.firstName"
+            name="firstName"
+            #fname="ngModel"
+          />
+          <div class="validation">
+            @if(fname.invalid && (fname.touched || fname.dirty)){ @if(fname.getError('required')){
+            <div class="text-danger">First name is required</div>
+            } @else if(fname.getError('minlength')){
+            <div class="text-danger">Minimum length is 2</div>
+            } }
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label for="lname" class="form-label">Last Name</label>
+          <input
+            type="text"
+            id="lname"
+            class="form-control"
+            placeholder="Enter your last name"
+            required
+            minlength="2"
+            [(ngModel)]="userInfo.lastName"
+            name="lastName"
+            #lname="ngModel"
+          />
+          <div class="validation">
+            @if(lname.invalid && (lname.touched || lname.dirty)){ @if(lname.getError('required')){
+            <div class="text-danger">Last name is required</div>
+            } @else if(lname.getError('minlength')){
+            <div class="text-danger">Minimum length is 2</div>
+            } }
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            class="form-control"
+            placeholder="Enter your phone number"
+            required
+            pattern="^[0-9]{10,15}$"
+            [(ngModel)]="userInfo.phone"
+            name="phone"
+            #phone="ngModel"
+          />
+          <div class="validation">
+            @if(phone.invalid && (phone.touched || phone.dirty)){ @if(phone.getError('required')){
+            <div class="text-danger">Phone is required</div>
+            } @else if(phone.getError('pattern')){
+            <div class="text-danger">Invalid phone number</div>
+            } }
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder="Enter your email"
+            required
+            email
+            [(ngModel)]="userInfo.email"
+            name="email"
+            #email="ngModel"
+          />
+          <div class="validation">
+            @if(email.invalid && (email.touched || email.dirty)){ @if(email.getError('required')){
+            <div class="text-danger">Email is required</div>
+            } @else if(email.getError('email')){
+            <div class="text-danger">Enter a valid email</div>
+            } }
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="password-input-container">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+              minlength="8"
+              [(ngModel)]="userInfo.password"
+              name="password"
+              #password="ngModel"
+            />
+            <button 
+              type="button" 
+              class="password-toggle" 
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+              <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+            </button>
+          </div>
+          <div class="validation">
+            @if(password.invalid && (password.touched || password.dirty)){
+            @if(password.getError('required')){
+            <div class="text-danger">Password is required</div>
+            } @else if(password.getError('minlength')){
+            <div class="text-danger">Minimum length is 8</div>
+            } }
+          </div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="form-group role-selection">
+          <label class="form-label">I am a:</label>
+          <div class="role-options">
+            <div
+              class="role-card"
+              [class.active]="selectedRole === 'student'"
+              (click)="selectRole('student')"
+            >
+              <div class="role-icon"><i class="fas fa-user-graduate"></i></div>
+              <div class="role-info">
+                <h4>Student</h4>
+                <p>Learn new skills and access courses</p>
+              </div>
+            </div>
+
+            <div
+              class="role-card"
+              [class.active]="selectedRole === 'instructor'"
+              (click)="selectRole('instructor')"
+            >
+              <div class="role-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+              <div class="role-info">
+                <h4>Instructor</h4>
+                <p>Create and teach courses</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary signin-btn" [disabled]="signUpForm.invalid">
+          Create Account
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span class="divider-text">Or continue with</span>
+      </div>
+
+      <!-- Social Login -->
+      <div class="social-login">
+        <button type="button" class="btn btn-outline-secondary social-btn google-btn">
+          <i class="fab fa-google"></i>
+          <span>Google</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary social-btn facebook-btn">
+          <i class="fab fa-facebook-f"></i>
+          <span>Facebook</span>
+        </button>
+      </div>
+
+      <!-- Login Link -->
+      <div class="signup-link">
+        <p>
+          Already have an account?
+          <a routerLink="/login" class="signup-text">Log in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

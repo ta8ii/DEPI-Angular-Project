@@ -1,0 +1,159 @@
+.payment-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 2rem 0;
+}
+
+.payment-card,
+.order-summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.payment-method-option:hover {
+  border-color: #4285f4;
+  background-color: #f8f9ff;
+}
+
+.payment-method-option input[type="radio"]:checked + label {
+  color: #4285f4;
+  font-weight: 600;
+}
+
+.payment-method-option input[type="radio"]:checked ~ .payment-method-option {
+  border-color: #4285f4;
+}
+
+.payment-method-option label {
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+}
+
+.payment-method-option input[type="radio"] {
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.form-control {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.2s;
+}
+
+.form-control:focus {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 12px;
+  color: #dc3545;
+  margin-top: 4px;
+}
+
+.btn-dark {
+  background-color: #1a1a1a;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.btn-dark:hover:not(:disabled) {
+  background-color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-dark:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.course-summary {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.course-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.price-breakdown {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.features-list ul li {
+  font-size: 14px;
+  color: #666;
+}
+
+.security-badge {
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 8px;
+}
+
+.form-check-input:checked {
+  background-color: #4285f4;
+  border-color: #4285f4;
+}
+
+.form-check-label a {
+  text-decoration: none;
+}
+
+.form-check-label a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .payment-card,
+  .order-summary-card {
+    padding: 1.5rem;
+  }
+
+  .payment-page {
+    padding: 1rem 0;
+  }
+}
+

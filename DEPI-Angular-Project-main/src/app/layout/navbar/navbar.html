@@ -1,0 +1,175 @@
+<div class="body">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white py-0 shadow-sm">
+    <div class="container-fluid px-5 mx-5 d-flex align-items-center justify-content-center" style="gap: 3rem;">
+      <!-- ✅ Logo & Brand -->
+      <div class="d-flex align-items-center">
+        <div class="logo me-2">
+          <img src="images/Logo.png" alt="Logo" class="logo-img" />
+        </div>
+        <span class="brand-name"><a routerLink="/home" href="">NextEdu</a></span>
+      </div>
+
+      <!-- ✅ Desktop Search -->
+      <div class="search-container d-none d-lg-flex flex-grow-1 justify-content-center mx-4">
+        <div class="input-group" style="max-width: 400px">
+          <span class="input-group-text bg-light border-0">
+            <i class="fas fa-search text-muted"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-0 bg-light search-input"
+            placeholder="Search for courses..."
+          />
+        </div>
+      </div>
+
+      <!-- ✅ Desktop Nav Links -->
+      <div class="nav-section d-none d-lg-flex align-items-center gap-4">
+        <a routerLink="/courses" class="nav-link">Courses</a>
+
+        <ng-container *ngIf="!isLoggedIn; else loggedInMenu">
+          <a routerLink="/login" class="nav-link">Log In</a>
+          <button routerLink="/sign-up" class="btn btn-primary signup-btn">Sign Up</button>
+        </ng-container>
+
+        <ng-template #loggedInMenu>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle border-0 bg-transparent fw-semibold"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ currentUser?.name || currentUser?.firstName || 'Profile' }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li *ngIf="currentUser?.role === 'student'"><a class="dropdown-item" routerLink="/student/home">
+                <i class="fas fa-home me-2"></i>Dashboard
+              </a></li>
+              <li *ngIf="currentUser?.role === 'instructor'"><a class="dropdown-item" routerLink="/instructor/home">
+                <i class="fas fa-home me-2"></i>Dashboard
+              </a></li>
+              <li *ngIf="currentUser?.role === 'student'"><a class="dropdown-item" routerLink="/student/my-courses">
+                <i class="fas fa-book me-2"></i>My Courses
+              </a></li>
+              <li *ngIf="currentUser?.role === 'instructor'"><a class="dropdown-item" routerLink="/instructor/my-courses">
+                <i class="fas fa-book me-2"></i>My Courses
+              </a></li>
+              <li *ngIf="currentUser?.role === 'student'"><a class="dropdown-item" routerLink="/student/profile">
+                <i class="fas fa-user me-2"></i>Profile
+              </a></li>
+              <li *ngIf="currentUser?.role === 'instructor'"><a class="dropdown-item" routerLink="/instructor/profile">
+                <i class="fas fa-user me-2"></i>Profile
+              </a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item text-danger" (click)="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>Sign out
+              </a></li>
+            </ul>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- ✅ Mobile Toggle -->
+      <button
+        class="navbar-toggler border-0 d-lg-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- ✅ Mobile Menu -->
+      <div class="collapse navbar-collapse mt-2" id="navbarNav">
+        <div class="navbar-nav d-lg-none text-center">
+          <a class="nav-link" routerLink="/courses">Courses</a>
+
+          <ng-container *ngIf="!isLoggedIn; else mobileLoggedMenu">
+            <a class="nav-link" routerLink="/login">Log In</a>
+            <button class="btn btn-primary w-100 mt-2" routerLink="/sign-up">Sign Up</button>
+          </ng-container>
+
+                 <ng-template #mobileLoggedMenu>
+                   <a *ngIf="currentUser?.role === 'student'" class="nav-link" routerLink="/student/home">Dashboard</a>
+                   <a *ngIf="currentUser?.role === 'instructor'" class="nav-link" routerLink="/instructor/home">Dashboard</a>
+                   <a *ngIf="currentUser?.role === 'student'" class="nav-link" routerLink="/student/my-courses">My Courses</a>
+                   <a *ngIf="currentUser?.role === 'instructor'" class="nav-link" routerLink="/instructor/my-courses">My Courses</a>
+                   <a *ngIf="currentUser?.role === 'student'" class="nav-link" routerLink="/student/profile">Profile</a>
+                   <a *ngIf="currentUser?.role === 'instructor'" class="nav-link" routerLink="/instructor/profile">Profile</a>
+                   <button class="btn btn-danger w-100 mt-2" (click)="logout()">Sign out</button>
+                 </ng-template>
+        </div>
+
+        <!-- ✅ Mobile Search -->
+        <div class="search-container-mobile d-lg-none mt-3 px-2">
+          <div class="input-group">
+            <span class="input-group-text bg-light border-0">
+              <i class="fas fa-search text-muted"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-0 bg-light"
+              placeholder="Search for courses..."
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- <div class="body">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white py-0 shadow-sm">
+    <div class="container-fluid px-3 d-flex align-items-center">
+      <!-- ✅ Logo & Brand -
+      <div class="d-flex align-items-center">
+        <div class="logo me-2">
+          <img src="images/Logo.png" alt="Logo" class="logo-img" />
+        </div>
+        <span class="brand-name"><a routerLink="/home">NextEdu</a></span>
+      </div>
+
+      <!-- ✅ Desktop Search --
+      <div class="search-container d-none d-lg-flex flex-grow-1 justify-content-center mx-4">
+        <div class="input-group" style="max-width: 400px">
+          <span class="input-group-text bg-light border-0">
+            <i class="fas fa-search text-muted"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-0 bg-light search-input"
+            placeholder="Search for courses..."
+          />
+        </div>
+      </div>
+
+      <!-- ✅ Desktop Nav Links (moved to the far right) --
+      <div class="nav-section d-none d-lg-flex align-items-center gap-4 ms-auto">
+        <a routerLink="/courses" class="nav-link">Courses</a>
+
+        <!-- Profile Dropdown --
+        <div class="dropdown">
+          <button
+            class="btn btn-light dropdown-toggle profile-btn"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Profile
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li><a class="dropdown-item" routerLink="/dashboard">Dashboard</a></li>
+            <li><a class="dropdown-item" routerLink="/courses">My Courses</a></li>
+            <!-- <li><a class="dropdown-item" routerLink="/">Settings</a></li> --
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item text-danger" (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div> -->

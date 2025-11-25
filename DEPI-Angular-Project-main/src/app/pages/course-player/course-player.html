@@ -1,0 +1,188 @@
+<div class="course-player-page">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-overlay">
+    <div class="loading-content">
+      <i class="fas fa-spinner fa-spin fa-3x mb-3"></i>
+      <p>Loading course...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <div class="error-content">
+      <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+      <h3>Error Loading Course</h3>
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="loadCourseData()">
+        <i class="fas fa-redo me-2"></i>Retry
+      </button>
+      <button class="btn btn-outline-secondary ms-2" (click)="handleButtonClick('back')">
+        <i class="fas fa-arrow-left me-2"></i>Back to Courses
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error" class="container-fluid">
+    <div class="row">
+      <!-- Main Video Player Section -->
+      <div class="col-12 mb-4">
+        <div class="video-player-container">
+          <!-- Header with course info -->
+          <div class="player-header">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h2 class="course-title mb-1">{{ course?.title || 'Course Player' }}</h2>
+                <p class="course-subtitle text-muted mb-0">{{ course?.description || 'Loading course details...' }}</p>
+              </div>
+              <button 
+                class="btn btn-outline-secondary" 
+                (click)="handleButtonClick('back')"
+                type="button">
+                <i class="fas fa-arrow-left me-2"></i>Back to Courses
+              </button>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-section">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="progress-label">Course Progress</span>
+                <span class="progress-percentage">{{ getCompletionPercentage() }}%</span>
+              </div>
+              <div class="progress" style="height: 8px;">
+                <div 
+                  class="progress-bar bg-success" 
+                  role="progressbar" 
+                  [style.width.%]="getCompletionPercentage()"
+                  [attr.aria-valuenow]="getCompletionPercentage()"
+                  aria-valuemin="0" 
+                  aria-valuemax="100">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Player -->
+          <div class="video-wrapper">
+            <!-- Video Loading Spinner -->
+            <div *ngIf="videoLoading" class="video-loading-overlay">
+              <i class="fas fa-spinner fa-spin fa-2x"></i>
+              <p>Loading video...</p>
+            </div>
+
+            <!-- Video Error Message -->
+            <div *ngIf="videoError && !videoLoading" class="video-error-overlay">
+              <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
+              <p>Failed to load video</p>
+              <button class="btn btn-primary btn-sm" (click)="retryVideoLoad()">
+                <i class="fas fa-redo me-2"></i>Retry
+              </button>
+            </div>
+
+            <video 
+              #videoPlayer
+              class="video-player"
+              [class.hidden]="videoError"
+              controls
+              preload="metadata"
+              [poster]="course?.thumbnail || 'https://via.placeholder.com/1280x720?text=Video+Player'">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <!-- Current Video Info -->
+          <div class="current-video-info" *ngIf="currentVideo">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <h4 class="video-title">{{ currentVideo.title }}</h4>
+                <div class="video-meta">
+                  <span class="video-number">Video {{ getVideoIndex(currentVideo) }} of {{ courseVideos.length }}</span>
+                  <span class="video-duration">
+                    <i class="fas fa-clock me-1"></i>{{ currentVideo.duration }}
+                  </span>
+                </div>
+              </div>
+              <div class="video-controls">
+                <button 
+                  class="btn btn-sm btn-outline-secondary me-2" 
+                  (click)="handleButtonClick('previous')"
+                  [disabled]="getVideoIndex(currentVideo) === 1"
+                  type="button">
+                  <i class="fas fa-step-backward me-1"></i>Previous
+                </button>
+                <button 
+                  class="btn btn-sm btn-outline-secondary me-2" 
+                  (click)="handleButtonClick('replay')"
+                  type="button">
+                  <i class="fas fa-redo me-1"></i>Replay
+                </button>
+                <button 
+                  class="btn btn-sm btn-outline-secondary" 
+                  (click)="handleButtonClick('next')"
+                  [disabled]="getVideoIndex(currentVideo) === courseVideos.length"
+                  type="button">
+                  Next<i class="fas fa-step-forward ms-1"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video List Section -->
+      <div class="col-12">
+        <div class="videos-list-container">
+          <div class="videos-list-header">
+            <h5 class="mb-0">
+              <i class="fas fa-list me-2"></i>Course Videos
+            </h5>
+            <span class="badge bg-primary">{{ completedVideos.length }}/{{ courseVideos.length }} Completed</span>
+          </div>
+
+          <div class="videos-list">
+            <div 
+              *ngFor="let video of courseVideos; let i = index"
+              [id]="'video-item-' + video.id"
+              class="video-item"
+              [class.active]="currentVideo?.id === video.id"
+              [class.completed]="isVideoCompleted(video.id)"
+              (click)="selectVideo(video)">
+              
+              <div class="video-item-content">
+                <div class="video-number-badge">
+                  {{ i + 1 }}
+                </div>
+                
+                <div class="video-info">
+                  <h6 class="video-item-title">{{ video.title }}</h6>
+                  <div class="video-item-meta">
+                    <span class="video-duration-badge">
+                      <i class="fas fa-clock me-1"></i>{{ video.duration }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="video-status">
+                  <i 
+                    class="fas"
+                    [class.fa-check-circle]="isVideoCompleted(video.id)"
+                    [class.fa-circle]="!isVideoCompleted(video.id)"
+                    [class.text-success]="isVideoCompleted(video.id)"
+                    [class.text-muted]="!isVideoCompleted(video.id)">
+                  </i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="courseVideos.length === 0" class="empty-videos-state">
+              <i class="fas fa-video fa-3x mb-3 text-muted"></i>
+              <p class="text-muted">No videos available for this course</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

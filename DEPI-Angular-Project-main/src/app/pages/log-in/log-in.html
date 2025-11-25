@@ -1,0 +1,98 @@
+<div class="body">
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Logo and Header -->
+      <div class="login-header">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <span class="logo-letter">E</span>
+          </div>
+        </div>
+        <h1 class="welcome-title">Welcome Back</h1>
+        <p class="welcome-subtitle">log in to your account to continue learning</p>
+      </div>
+
+      <!-- Login Form -->
+      <form class="login-form" (ngSubmit)="submit(myform)" #myform="ngForm">
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder="Enter your email"
+            required
+            minlength="3"
+            [(ngModel)]="userInfo.Email"
+            name="Email"
+            #myemail="ngModel"
+          />
+          <div class="validation">
+            @if(myemail.invalid && (myemail.touched || myemail.dirty)){
+            @if(myemail.getError('required')){
+            <div class="text-danger">this input is required</div>
+            } @else if (myemail.getError('minlength')) {
+            <div class="text-danger">minlength is 3</div>
+            } }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="password-input-container">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+              minlength="8"
+              [(ngModel)]="userInfo.password"
+              name="password"
+              #mypassword="ngModel"
+            />
+            <button 
+              type="button" 
+              class="password-toggle" 
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+              <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+            </button>
+            <div class="validation">
+              @if(mypassword.invalid && (mypassword.touched || mypassword.dirty)){
+              @if(mypassword.getError('required')){
+              <div class="text-danger">this input is required</div>
+              } @else if (mypassword.getError('minlength')) {
+              <div class="text-danger">minlength is 8</div>
+              } }
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary signin-btn">Log In</button>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span class="divider-text">Or continue with</span>
+      </div>
+
+      <!-- Social Login Buttons -->
+      <div class="social-login">
+        <button type="button" class="btn btn-outline-secondary social-btn google-btn">
+          <i class="fab fa-google"></i>
+          <span>Google</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary social-btn facebook-btn">
+          <i class="fab fa-facebook-f"></i>
+          <span>Facebook</span>
+        </button>
+      </div>
+
+      <!-- Sign Up Link -->
+      <div class="signup-link">
+        <p>Don't have an account? <a routerLink="/sign-up" class="signup-text">Sign up</a></p>
+      </div>
+    </div>
+  </div>
+</div>

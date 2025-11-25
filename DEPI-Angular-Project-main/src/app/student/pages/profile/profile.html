@@ -1,0 +1,217 @@
+<div class="student-profile-page">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <!-- Header -->
+        <div class="profile-header-card">
+          <div class="profile-header-content">
+            <div class="profile-avatar-section">
+              <div class="profile-avatar-large" [style.background-image]="getAvatarStyle()">
+                <i *ngIf="!profile?.avatar" class="fas fa-user"></i>
+              </div>
+              <button *ngIf="editing" class="avatar-edit-btn" type="button">
+                <i class="fas fa-camera"></i>
+              </button>
+            </div>
+            <div class="profile-header-info">
+              <h1 class="profile-name">{{ profile?.name || profile?.username || 'Loading...' }}</h1>
+              <p class="profile-email">{{ profile?.email || 'No email' }}</p>
+              <span class="role-badge student">
+                <i class="fas fa-user-graduate me-2"></i>Student
+              </span>
+            </div>
+            <div class="profile-header-actions">
+              <button *ngIf="!editing" (click)="toggleEdit()" class="btn btn-primary">
+                <i class="fas fa-edit me-2"></i>Edit Profile
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="progress-summary-cards">
+          <div class="summary-card">
+            <div class="summary-icon blue">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="summary-content">
+              <div class="summary-number">{{ profile?.enrolledCourses?.length || 0 }}</div>
+              <div class="summary-label">Enrolled Courses</div>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon green">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="summary-content">
+              <div class="summary-number">
+                {{ getCompletedCoursesCount() }}
+              </div>
+              <div class="summary-label">Completed</div>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon purple">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="summary-content">
+              <div class="summary-number">{{ getTotalProgress() }}%</div>
+              <div class="summary-label">Average Progress</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Form / Info -->
+        <div class="profile-content-card">
+          <div *ngIf="loading" class="loading-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading profile...</span>
+          </div>
+
+          <form
+            *ngIf="!loading && editing"
+            [formGroup]="profileForm"
+            (ngSubmit)="onSubmit()"
+            class="profile-form"
+          >
+            <h3 class="section-title">Personal Information</h3>
+
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                class="form-control"
+                [class.error]="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
+              />
+              <div
+                *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
+                class="error-message"
+              >
+                {{ getFieldError('name') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="form-control"
+                [class.error]="
+                  profileForm.get('email')?.invalid && profileForm.get('email')?.touched
+                "
+              />
+              <div
+                *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+                class="error-message"
+              >
+                {{ getFieldError('email') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="bio">Bio</label>
+              <textarea
+                id="bio"
+                formControlName="bio"
+                class="form-control"
+                rows="4"
+                placeholder="Tell us about yourself..."
+                [class.error]="profileForm.get('bio')?.invalid && profileForm.get('bio')?.touched"
+              ></textarea>
+              <div
+                *ngIf="profileForm.get('bio')?.invalid && profileForm.get('bio')?.touched"
+                class="error-message"
+              >
+                {{ getFieldError('bio') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="avatar">Avatar URL</label>
+              <input
+                type="url"
+                id="avatar"
+                formControlName="avatar"
+                class="form-control"
+                placeholder="https://example.com/avatar.jpg"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button type="button" (click)="toggleEdit()" class="btn btn-secondary">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="submitting">
+                <i
+                  class="fas"
+                  [class.fa-spinner]="submitting"
+                  [class.fa-spin]="submitting"
+                  [class.fa-save]="!submitting"
+                ></i>
+                {{ submitting ? 'Saving...' : 'Save Changes' }}
+              </button>
+            </div>
+          </form>
+
+          <div *ngIf="!loading && !editing && profile" class="profile-info">
+            <h3 class="section-title">Personal Information</h3>
+            <div class="info-section">
+              <div class="info-row">
+                <label>Full Name</label>
+                <div class="info-value">{{ profile.name || profile.username || 'Not set' }}</div>
+              </div>
+              <div class="info-row">
+                <label>Email Address</label>
+                <div class="info-value">{{ profile.email || 'Not set' }}</div>
+              </div>
+              <div class="info-row" *ngIf="profile.bio">
+                <label>Bio</label>
+                <div class="info-value">{{ profile.bio }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enrolled Courses -->
+        <div class="enrolled-courses-card" *ngIf="!loading && profile">
+          <h3 class="section-title">My Enrolled Courses</h3>
+          <div
+            *ngIf="!profile.enrolledCourses || profile.enrolledCourses.length === 0"
+            class="empty-state"
+          >
+            <i class="fas fa-book"></i>
+            <p>No enrolled courses yet</p>
+            <a routerLink="/courses" class="btn btn-primary">Browse Courses</a>
+          </div>
+          <div
+            *ngIf="profile.enrolledCourses && profile.enrolledCourses.length > 0"
+            class="courses-list"
+          >
+            <div *ngFor="let course of profile.enrolledCourses" class="course-item">
+              <div class="course-thumbnail">
+                <i class="fas fa-book"></i>
+              </div>
+              <div class="course-info">
+                <h4 class="course-title">{{ course.title }}</h4>
+                <div class="course-progress">
+                  <div class="progress-bar-wrapper">
+                    <div class="progress-bar" [style.width.%]="course.progress || 0"></div>
+                  </div>
+                  <span class="progress-text">{{ course.progress || 0 }}%</span>
+                </div>
+              </div>
+              <a
+                [routerLink]="['/student/course', course.id || course._id]"
+                class="btn btn-primary btn-sm"
+              >
+                <i class="fas fa-play me-2"></i>Continue
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

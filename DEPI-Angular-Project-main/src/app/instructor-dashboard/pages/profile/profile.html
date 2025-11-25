@@ -1,0 +1,138 @@
+<div class="profile">
+  <div class="page-header">
+    <h1 class="page-title">Profile</h1>
+    <button *ngIf="!editing" (click)="toggleEdit()" class="btn-primary">
+      <i class="fas fa-edit"></i>
+      Edit Profile
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    <span>Loading profile...</span>
+  </div>
+
+  <div *ngIf="!loading && profile" class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar-large">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="profile-header-info">
+        <h2>{{ profile.name }}</h2>
+        <p class="profile-email">{{ profile.email }}</p>
+      </div>
+    </div>
+
+    <div class="profile-stats">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{ profile.totalCourses }}</div>
+          <div class="stat-label">Total Courses</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{ profile.totalStudents | number }}</div>
+          <div class="stat-label">Total Students</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple">
+          <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">${{ profile.totalRevenue | number:'1.2-2' }}</div>
+          <div class="stat-label">Total Revenue</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-form-container">
+      <form *ngIf="editing" [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [class.error]="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
+          />
+          <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched" class="error-message">
+            Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.error]="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+          />
+          <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-message">
+            Valid email is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bio">Bio *</label>
+          <textarea
+            id="bio"
+            formControlName="bio"
+            class="form-control"
+            rows="5"
+            [class.error]="profileForm.get('bio')?.invalid && profileForm.get('bio')?.touched"
+          ></textarea>
+          <div *ngIf="profileForm.get('bio')?.invalid && profileForm.get('bio')?.touched" class="error-message">
+            Bio must be at least 20 characters
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="skills">Skills (comma-separated)</label>
+          <input
+            type="text"
+            id="skills"
+            formControlName="skills"
+            class="form-control"
+            placeholder="JavaScript, React, Node.js"
+          />
+        </div>
+
+        <div class="form-actions">
+          <button type="button" (click)="toggleEdit()" class="btn-secondary">
+            Cancel
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="submitting">
+            <i class="fas" [class.fa-spinner]="submitting" [class.fa-spin]="submitting" [class.fa-save]="!submitting"></i>
+            {{ submitting ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+      </form>
+
+      <div *ngIf="!editing" class="profile-info">
+        <div class="info-section">
+          <h3>Bio</h3>
+          <p>{{ profile.bio }}</p>
+        </div>
+
+        <div class="info-section">
+          <h3>Skills</h3>
+          <div class="skills-list">
+            <span *ngFor="let skill of profile.skills" class="skill-badge">{{ skill }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

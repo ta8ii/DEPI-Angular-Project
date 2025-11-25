@@ -1,0 +1,364 @@
+/* Navbar general */
+.body{
+  position: relative;
+  /* overflow-x: hidden; */
+  scroll-behavior: smooth;
+    
+}
+.navbar {
+    border-top: 1px solid #e0e0e0 !important;
+    border-left: 1px solid #333 !important;
+    border-bottom: 1px solid #E5E5E5 !important;
+    min-height: 70px;  
+    padding: 0 !important;
+}
+
+
+/* Logo styling */
+.logo {
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.logo-letter {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+/* Brand name styling */
+.brand-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.brand-name a{
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.brand-name:hover a{
+    color: #4285f4;
+}
+/* Search container styling */
+.search-container {
+    max-width: 400px;
+    width: 100%;
+}
+
+.search-container-mobile {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Input group styling to match image */
+.input-group-text {
+    background-color: #f5f5f5 !important;
+    border-color: transparent !important;
+    padding: 0.5rem 0.75rem;
+}
+
+.search-input {
+    background-color: #f5f5f5 !important;
+    border-color: transparent !important;
+    border-radius: 0 8px 8px 0 !important;
+    font-size: 14px;
+    color: #333 !important;
+}
+
+.search-input:focus {
+    background-color: #f5f5f5 !important;
+    border-color: transparent !important;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3) !important;
+    color: #333 !important;
+}
+
+/* Input group focus styling - glow effect only */
+.input-group:focus-within {
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3) !important;
+    border-radius: 8px;
+}
+
+.input-group:focus-within .input-group-text {
+    background-color: #f5f5f5 !important;
+    border-color: transparent !important;
+}
+
+.input-group:focus-within .search-input {
+    background-color: #f5f5f5 !important;
+    border-color: transparent !important;
+}
+
+.search-input::placeholder {
+    color: #999 !important;
+}
+
+/* Input group with rounded corners */
+.input-group .input-group-text:first-child {
+    border-radius: 8px 0 0 8px !important;
+}
+
+/* Navigation links styling */
+.nav-link {
+    color: #333 !important;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+    padding: 0.5rem 0 !important;
+}
+
+.nav-link:hover {
+    color: #666 !important;
+
+}
+
+/* Desktop icon styling */
+.fa-desktop {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Sign up button styling */
+.signup-btn {
+    background-color: #4285f4 !important;
+    border-color: #4285f4 !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: background-color 0.2s;
+}
+
+.signup-btn:hover {
+    background-color: #3367d6 !important;
+    border-color: #3367d6 !important;
+}
+
+/* Navbar toggler styling */
+.navbar-toggler {
+    border: none !important;
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+.nav-section a {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    padding: 10px 10px !important;
+}
+
+.nav-section a:hover {
+    background-color: #F3F3F5 !important;
+}
+
+/* Responsive Design for All Screen Sizes */
+
+/* Extra Large Screens (1200px and up) */
+@media (min-width: 1200px) {
+.navbar .container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: center !important;
+}
+    
+    .search-container {
+        max-width: 500px;
+    }
+}
+
+/* Large Screens (992px and up) */
+@media (min-width: 992px) {
+.navbar .container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: center !important;
+}
+}
+
+/* Mobile Screens (below 992px) */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: white;
+        border-top: 1px solid #e0e0e0;
+        margin-top: 10px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Mobile search bar styling */
+    .search-container-mobile {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .brand-name {
+        font-size: 16px;
+    }
+    
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 12px 20px !important;
+        text-align: center;
+        width: 100%;
+        border-radius: 8px;
+        margin: 5px 0;
+    }
+    
+    .navbar-nav .btn {
+        width: 100%;
+        margin-top: 10px;
+        padding: 12px 20px !important;
+    }
+}
+
+/* Small Screens (576px to 767px) */
+@media (max-width: 767.98px) {
+    .navbar .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .brand-name {
+        font-size: 14px;
+    }
+    
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .navbar-collapse {
+        padding: 15px;
+    }
+    
+    .nav-section a {
+        padding: 10px 15px !important;
+        font-size: 13px;
+    }
+}
+
+/* Extra Small Screens (below 576px) */
+@media (max-width: 575.98px) {
+    .navbar {
+        min-height: 60px;
+    }
+    
+    .navbar .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .brand-name {
+        font-size: 13px;
+    }
+    
+    .logo {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .navbar-collapse {
+        padding: 10px;
+        margin-top: 5px;
+    }
+    
+    .search-input {
+        font-size: 13px;
+        height: 35px;
+    }
+    
+    .input-group-text {
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .nav-section a {
+        padding: 8px 12px !important;
+        font-size: 12px;
+    }
+    
+    .signup-btn {
+        padding: 10px 15px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* Ultra Small Screens (below 400px) */
+@media (max-width: 399.98px) {
+    .brand-name {
+        display: none;
+    }
+    
+    .logo {
+        margin-right: 0 !important;
+    }
+    
+    .search-input::placeholder {
+        font-size: 11px;
+    }
+}
+
+.nav-section {
+  margin-left: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-link {
+  color: #333 !important;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: #4285f4 !important;
+}
+
+.profile-btn {
+  background-color: transparent !important;
+  border: none !important;
+  color: #333 !important;
+  font-weight: 500;
+}
+
+.dropdown-menu {
+  z-index: 5000 !important;
+  position: absolute !important;
+  top: 100%;
+  right: 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}

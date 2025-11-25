@@ -1,0 +1,223 @@
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-content">
+      <!-- Title and Description -->
+      <div class="hero-text">
+        <h1 class="hero-title">All Courses</h1>
+        <p class="hero-description">
+          Discover and learn new skills with our comprehensive course catalog
+        </p>
+      </div>
+
+      <!-- Search and Filters Row -->
+      <div class="search-filters-row">
+        <!-- Search Bar -->
+        <div class="hero-search-container">
+          <div class="input-group">
+            <span class="input-group-text bg-light border-0">
+              <i class="fas fa-search text-muted"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-0 bg-light hero-search-input"
+              placeholder="Search courses, instructors, or topics..."
+              [(ngModel)]="searchQuery"
+              (input)="onSearchChange()"
+            />
+          </div>
+        </div>
+
+        <!-- Filters and View Options -->
+        <div class="filters-view-section">
+          <button class="btn btn-outline-secondary filters-btn" (click)="toggleFilters()">
+            <i class="fas fa-filter me-2"></i>
+            Filters
+            <span
+              *ngIf="selectedCategories.size > 0 || selectedRatingFilter !== 'all'"
+              class="badge badge-active"
+              >{{ selectedCategories.size + (selectedRatingFilter !== 'all' ? 1 : 0) }}</span
+            >
+          </button>
+
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-secondary dropdown-toggle sort-btn"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              {{
+                sortBy === 'popular'
+                  ? 'Most Popular'
+                  : sortBy === 'rating'
+                  ? 'Highest Rated'
+                  : sortBy === 'price-low'
+                  ? 'Price: Low to High'
+                  : sortBy === 'price-high'
+                  ? 'Price: High to Low'
+                  : 'Newest'
+              }}
+              <i class="fas fa-chevron-down ms-1"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  (click)="onSortChange('popular'); $event.preventDefault()"
+                  >Most Popular</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  (click)="onSortChange('newest'); $event.preventDefault()"
+                  >Newest</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  (click)="onSortChange('rating'); $event.preventDefault()"
+                  >Highest Rated</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  (click)="onSortChange('price-low'); $event.preventDefault()"
+                  >Price: Low to High</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  (click)="onSortChange('price-high'); $event.preventDefault()"
+                  >Price: High to Low</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Count -->
+      <div class="course-count">
+        <span class="count-text"
+          >Showing {{ filteredCourses.length }}
+          {{ filteredCourses.length === 1 ? 'course' : 'courses' }}</span
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filters Sidebar -->
+<section class="filters-section" [class.show]="showFilters">
+  <div class="container">
+    <div class="filters-container">
+      <div class="filters-header">
+        <h3 class="filters-title">Filters</h3>
+        <button class="btn-close" (click)="toggleFilters()" aria-label="Close filters"></button>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <h4 class="filter-title">Category</h4>
+        <div class="filter-options">
+          <label *ngFor="let category of categories" class="filter-label">
+            <input
+              type="checkbox"
+              [checked]="isCategorySelected(category)"
+              (change)="toggleCategory(category)"
+            />
+            <span class="filter-text">{{ category }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Rating Filter -->
+      <div class="filter-group">
+        <h4 class="filter-title">Rating</h4>
+        <div class="filter-options">
+          <label *ngFor="let rating of ratingOptions" class="filter-label">
+            <input
+              type="radio"
+              name="rating"
+              [value]="rating.value"
+              [checked]="selectedRatingFilter === rating.value"
+              (change)="onRatingFilterChange(rating.value)"
+            />
+            <span class="filter-text">{{ rating.label }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Clear Filters Button -->
+      <div class="filter-actions">
+        <button
+          class="btn btn-outline-secondary btn-block"
+          (click)="clearFilters()"
+          *ngIf="selectedCategories.size > 0 || selectedRatingFilter !== 'all'"
+        >
+          Clear All Filters
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Courses Grid Section -->
+<section class="courses-section">
+  <div class="container">
+    <div *ngIf="loading" class="text-center py-5">
+      <p>Loading courses...</p>
+    </div>
+    <div *ngIf="!loading && filteredCourses.length === 0" class="text-center py-5">
+      <p>No courses available.</p>
+    </div>
+    <div class="row g-4" *ngIf="!loading && filteredCourses.length > 0">
+      <div *ngFor="let course of filteredCourses" class="col-lg-4 col-md-6">
+        <div class="course-card">
+          <div class="course-image">
+            <img
+              *ngIf="course.thumbnail"
+              [src]="course.thumbnail"
+              [alt]="course.title"
+              class="w-100 h-100"
+              style="object-fit: cover"
+            />
+            <div *ngIf="!course.thumbnail" class="image-placeholder"></div>
+          </div>
+          <div class="course-content">
+            <div class="course-tags">
+              <span class="tag">{{ getCategory(course) }}</span>
+            </div>
+            <h3 class="course-title">{{ course.title }}</h3>
+            <p class="course-description">{{ course.description }}</p>
+            <p class="instructor">by {{ getInstructorName(course) }}</p>
+            <div class="course-stats">
+              <div class="stat">
+                <i class="fas fa-star"></i>
+                <span>{{ getRating(course) }}</span>
+              </div>
+              <div class="stat">
+                <i class="fas fa-users"></i>
+                <span>{{ getStudents(course) | number }}</span>
+              </div>
+            </div>
+            <button
+              class="btn view-course-btn btn btn-primary signup-btn"
+              [routerLink]="['/courses', getCourseId(course)]"
+            >
+              View Course
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

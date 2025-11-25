@@ -1,0 +1,163 @@
+<div class="container my-5">
+  <div *ngIf="loading" class="text-center py-5">
+    <p>Loading course details...</p>
+  </div>
+  
+  <div *ngIf="!loading && !course" class="text-center py-5">
+    <p>Course not found.</p>
+  </div>
+
+  <!-- ===== Course Card ===== -->
+  <div *ngIf="!loading && course" class="course-card card border-0">
+    <div class="row g-0">
+      <!-- Left side -->
+      <div class="col-md-8 p-4">
+        <div class="mb-2">
+          <span class="badge bg-light text-dark border me-2">{{ getCategory() }}</span>
+        </div>
+
+        <h3 class="fw-bold mb-3">{{ course.title }}</h3>
+        <p class="text-muted mb-4">{{ course.description }}</p>
+
+        <div class="d-flex align-items-center flex-wrap text-muted mb-3">
+          <span class="me-3">
+            <i class="fa-solid fa-star text-warning me-1"></i> {{ getRating() }} ({{ getStudents() | number }} students)
+          </span>
+          <span class="me-3" *ngIf="lessons.length > 0">
+            <i class="fa-regular fa-clock me-1"></i> {{ formatDuration(getTotalDuration()) }}
+          </span>
+          <span class="me-3">
+            <i class="fa-solid fa-globe me-1"></i> English
+          </span>
+          <span>
+            <i class="fa-solid fa-certificate me-1"></i> Certificate included
+          </span>
+        </div>
+
+        <div class="d-flex align-items-center mt-4">
+          <div
+            class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center"
+            style="width: 45px; height: 45px"
+          >
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="ms-3">
+            <h6 class="mb-0 fw-bold">{{ getInstructorName() }}</h6>
+            <small class="text-muted">Instructor</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side -->
+      <div
+        class="col-md-4 bg-light p-4 text-center d-flex flex-column justify-content-center border-start"
+      >
+        <div class="mb-3">
+          <div class="fw-bold price text-dark" *ngIf="course.discount && course.discount > 0">
+            ${{ getDiscountedPrice().toFixed(2) }}
+          </div>
+          <div class="fw-bold price text-dark" *ngIf="!course.discount || course.discount === 0">
+            ${{ getPrice().toFixed(2) }}
+          </div>
+          <div class="text-decoration-line-through text-muted" *ngIf="course.discount && course.discount > 0">
+            ${{ getPrice().toFixed(2) }}
+          </div>
+        </div>
+
+        <!-- Buy Now Button - Show only if not purchased -->
+        <button 
+          *ngIf="!hasPurchased && isLoggedIn && courseId" 
+          class="btn btn-dark btn-sm w-100 mb-3 p-2 rounded-3" 
+          (click)="onBuyNow()"
+          [disabled]="processingPayment">
+          <i class="fas fa-shopping-cart me-2"></i>
+          <span *ngIf="!processingPayment">Buy Now</span>
+          <span *ngIf="processingPayment">Processing...</span>
+        </button>
+        
+        <!-- Start Learning Button - Show only if purchased -->
+        <button 
+          *ngIf="hasPurchased && isLoggedIn && courseId" 
+          class="btn btn-success btn-sm w-100 mb-3 p-2 rounded-3" 
+          [routerLink]="['/course', courseId, 'player']">
+          <i class="fas fa-play me-2"></i>Start Learning
+        </button>
+        
+        <!-- Login Button - Show only if not logged in -->
+        <button 
+          *ngIf="!isLoggedIn && courseId" 
+          class="btn btn-primary btn-sm w-100 mb-3 p-2 rounded-3" 
+          [routerLink]="['/login']"
+          [queryParams]="{ returnUrl: '/courses/' + courseId }">
+          <i class="fas fa-sign-in-alt me-2"></i>Login to Purchase & Access
+        </button>
+        
+        <!-- Info Message -->
+        <div *ngIf="hasPurchased && isLoggedIn" class="alert alert-success mt-3 mb-0">
+          <i class="fas fa-check-circle me-2"></i>You have access to this course!
+        </div>
+
+        <small class="text-muted d-block mb-3">30-day money-back guarantee</small>
+
+        <ul class="list-unstyled text-start mx-auto" style="max-width: 230px">
+          <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Lifetime access</li>
+          <li class="mb-2">
+            <i class="fa-solid fa-check text-success me-2"></i> Access on mobile and TV
+          </li>
+          <li class="mb-2">
+            <i class="fa-solid fa-check text-success me-2"></i> Certificate of completion
+          </li>
+          <li><i class="fa-solid fa-check text-success me-2"></i> Downloadable resources</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tabs Section ===== -->
+  <div class="tabs-container mt-4" *ngIf="!loading && course">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#overview">
+          Overview
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#lessons">Lessons</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Overview -->
+      <div class="tab-pane fade show active" id="overview" *ngIf="course">
+        <h6 class="fw-bold mt-4">Course Description</h6>
+        <p class="text-muted mb-1">{{ course.description }}</p>
+      </div>
+
+      <!-- Lessons -->
+      <div class="tab-pane fade" id="lessons" role="tabpanel">
+        <div class="p-3">
+          <h6 class="fw-bold mb-1">Course Curriculum</h6>
+          <p class="text-muted small mb-4" *ngIf="lessons.length > 0">
+            {{ lessons.length }} {{ lessons.length === 1 ? 'lesson' : 'lessons' }} • {{ formatDuration(getTotalDuration()) }} total
+          </p>
+          <p class="text-muted small mb-4" *ngIf="lessons.length === 0">
+            No lessons available yet.
+          </p>
+
+          <div *ngFor="let lesson of lessons; let i = index" class="lesson-card d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <div class="lesson-number">{{ i + 1 }}</div>
+              <div>
+                <div class="lesson-title">{{ lesson.title }}</div>
+                <small class="lesson-time text-muted">
+                  <i class="fa-regular fa-clock me-1"></i>{{ formatDuration(lesson.duration) }}
+                </small>
+              </div>
+            </div>
+            <i class="fa-solid fa-play text-muted"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
